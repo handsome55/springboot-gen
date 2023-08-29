@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+</head>
+<body>
+<table>
+    <tr>
+        <td></td>
+        <td><input type="button" id="proView" value="预览"/></td>
+        <td></td>
+    </tr>
+</table>
+<div class="style=white-space:pre-line" id="content">
+
+</div>
+</body>
+<script>
+    $(function(){
+	// 登陆
+	$("#proView").unbind("click").bind("click", function(){
+			$.ajax({  // ajax登陆请求
+				url:"/gen/gen_table/1123294853133111296",
+				type:"get",
+				data:{},
+				async:false,
+				success:function(res){
+					var html = "";
+                    for(var i=0;i<res.length;i++){  //遍历data数组
+                        var ls = res[i];
+                        html +=ls.code_file_content.replace(/\n/g,'<br>');
+                        var text = html.innerText;
+                        html.innerHTML = text;
+                      }
+                      console.log(html)
+                      $("#content").html(html); //在html页面id=test的标签里显示html内容
+				}
+			});
+	});
+})
+</script>
+</html>

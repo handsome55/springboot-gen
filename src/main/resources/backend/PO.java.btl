@@ -1,0 +1,46 @@
+package ${packageName}.${serviceName}.model.po;
+
+import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import net.fxft.alita.common.core.model.BaseEntity;
+
+/**
+ * ${functionName}实体
+ *
+ * @author ${authorName}
+ * @date ${genTime}
+ **/
+@TableName("${dbTable}")
+public class ${className} extends BaseEntity implements Serializable{
+    private static final long serialVersionUID = -1L;
+    <% for(var i = 0; i < configList.~size; i++) { %>
+    /** ${configList[i].fieldRemark} */
+    <% if(configList[i].needTableId) { %>
+    @TableId(type = IdType.INPUT)
+    <% }else { %><% } %>
+    private ${configList[i].fieldJavaType} ${configList[i].fieldNameCamelCase};
+    <% } %>
+
+    <% for(var i = 0; i < configList.~size; i++){ %>
+    <%
+        var getprefix ='';
+        if(configList[i].fieldJavaType=='Boolean'){
+            getprefix='is';
+        }else{
+            getprefix='get';
+        }
+    %>
+
+    <% if(configList[i].fieldNameCamelCase == 'id') { %>@Override<% } %>
+    public ${configList[i].fieldJavaType} ${getprefix}${configList[i].fieldNameCamelCaseFirstUpper}() {
+        return ${configList[i].fieldNameCamelCase};
+    }
+
+    <% if(configList[i].fieldNameCamelCase == 'id') { %>@Override<% } %>
+    public void set${configList[i].fieldNameCamelCaseFirstUpper}(${configList[i].fieldJavaType} ${configList[i].fieldNameCamelCase}) {
+        this.${configList[i].fieldNameCamelCase} = ${configList[i].fieldNameCamelCase};
+    }
+    <% } %>
+}

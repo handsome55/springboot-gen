@@ -1,0 +1,24 @@
+server:
+  port: 8089
+  servlet:
+    context-path: /gen
+spring:
+  application:
+    name: comment
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/springboot_gen?serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    static-path-pattern: /**
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    com.example.springbootgen.mapper: debug
+

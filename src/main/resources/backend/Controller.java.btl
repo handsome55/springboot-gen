@@ -1,0 +1,95 @@
+package ${packageName}.${serviceName}.controller;
+
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import ${packageName}.${serviceName}.model.dto.${className}DTO;
+import ${packageName}.${serviceName}.model.vo.${className}VO;
+import ${packageName}.${serviceName}.service.I${className}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
+
+/**
+ * ${functionName}控制器
+ *
+ * @author ${authorName}
+ * @date ${genTime}
+ */
+@RestController
+@RequestMapping("/${classNameSymbolCase}")
+@Validated
+public class ${className}Controller {
+
+    @Autowired
+    private I${className}Service ${classNameFirstLower}Service;
+
+    /**
+     * 获取${functionName}分页
+     *
+     * @author ${authorName}
+     * @date ${genTime}
+     */
+    @GetMapping("/page-list")
+    public R<PageResult<${className}VO>> pageList(${className}DTO ${classNameFirstLower}DTO) {
+        return R.ok(PageUtils.listToPageResult(${classNameFirstLower}Convertor.getBoVoMapper().src2Tgt(
+                ${classNameFirstLower}Service.pageList(
+                    ${classNameFirstLower}Convertor.getDtoBoMapper().src2Tgt(${classNameFirstLower}DTO), ${classNameFirstLower}DTO)),
+                ${classNameFirstLower}DTO),"分页查询列表成功");
+    }
+
+    /**
+     * 添加${functionName}
+     *
+     * @author ${authorName}
+     * @date ${genTime}
+     */
+    @PostMapping
+    public R<Long> create(@RequestBody @Validated(value={Insert.class}) ${className}DTO ${classNameFirstLower}DTO) {
+        return R.ok(${classNameFirstLower}Service.create(${classNameFirstLower}Convertor.getDtoBoMapper().src2Tgt(${classNameFirstLower}DTO)),"新增成功");
+    }
+
+    /**
+     * 编辑${functionName}
+     *
+     * @author ${authorName}
+     * @date ${genTime}
+     */
+    @PutMapping
+    public R<Long> update(@RequestBody @Validated(value={Update.class}) ${className}DTO ${classNameFirstLower}DTO) {
+        return R.ok(${classNameFirstLower}Service.update(${classNameFirstLower}Convertor.getDtoBoMapper().src2Tgt(${classNameFirstLower}DTO)),"编辑成功");
+    }
+
+    /**
+     * 删除${functionName}
+     *
+     * @author ${authorName}
+     * @date ${genTime}
+     */
+    @DeleteMapping("/{ids}")
+    public R<Integer> delete(@PathVariable(name="ids") @NotEmpty(message = "集合不能为空") List<Long> ids) {
+        return R.ok(${classNameFirstLower}Service.delete(ids),"删除成功");
+    }
+
+    /**
+     * 获取${functionName}详情
+     *
+     * @author ${authorName}
+     * @date ${genTime}
+     */
+    @GetMapping("/{id}")
+    public R<${className}VO> query(@PathVariable(name="id") Long id) {
+        return R.ok(${classNameFirstLower}Convertor.getBoVoMapper().src2Tgt(${classNameFirstLower}Service.query(id)),"查询详情成功");
+    }
+
+    /**
+     * 获取${functionName}列表
+     *
+     * @author ${authorName}
+     * @date ${genTime}
+    */
+    @GetMapping("/list")
+    public R<List<${className}VO>> list(${className}DTO ${classNameFirstLower}DTO) {
+       return R.ok(${classNameFirstLower}Convertor.getBoVoMapper().src2Tgt(${classNameFirstLower}Service.list(${classNameFirstLower}Convertor.getDtoBoMapper().src2Tgt(${classNameFirstLower}DTO))),"查询列表成功");
+    }
+}
